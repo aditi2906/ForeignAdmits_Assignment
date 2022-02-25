@@ -1,30 +1,5 @@
-<div class="container">
-  <h1>Task Manager</h1>
-  <form class="todo-form" #f="ngForm" (ngSubmit)="onSubmit(f)">
-      <input type="text" id="title" name="title" ngModel/>
-    <div>
-      <button
-        type="submit"
-        class="btn-floating waves-effect waves-light greeen"
-      >
-        <i class="material-icons">add</i>
-      </button>
-    </div>
+
+    <app-navbar></app-navbar>
+    <app-to-do-list></app-to-do-list>
     
-  </form>
-  <ul class="todo-list">
-    <li *ngFor="let todo of todos">
-      <div>
-        <div>{{ this.todo.title }}</div>
-        <div>
-          <button (click)="onComplete(this.todo.id)" class="btn-floating waves-effect waves-light blue">
-            <i class="material-icons">check</i>
-          </button>
-          <button (click)="onDelete(this.todo.id)" class="btn-floating waves-effect waves-light red">
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+   
