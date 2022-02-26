@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
+import { TodoListService } from './services/todo-list.service';
+import { StorageService } from './services/storage.service';
 
 
 
@@ -24,7 +26,7 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 
    
   ],
-  providers: [],
+  providers: [TodoListService,StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

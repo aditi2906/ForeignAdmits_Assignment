@@ -6,6 +6,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { TodoListService } from '../services/todo-list.service';
 
 
 
@@ -15,6 +16,7 @@ import {
   styleUrls: ['./to-do-list.component.scss'],
 })
 export class ToDoListComponent implements OnInit {
+  todoList: Item[] | undefined;
   
   todoForm: FormGroup | any;
 
@@ -25,13 +27,16 @@ export class ToDoListComponent implements OnInit {
   TaskDate:  any;
   TaskTime:  any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor
+  (private fb: FormBuilder,
+    private todoListService: TodoListService) {}
 
   ngOnInit(): void {
     this.TaskDate = new Date();
     this.todoForm = this.fb.group({
       item: ['','','',Validators.required],
     });
+    this.todoList = this.todoListService.getTodoList();
     
   
   }
@@ -43,6 +48,15 @@ export class ToDoListComponent implements OnInit {
       TaskTime,
       done: false,
     });
+     this.todoListService.addItem({
+  description: '',
+  TaskDate: this.TaskDate,
+  TaskTime: {
+    hours: 0,
+    minutes: 0
+  },
+  done: false
+});
   }
 
   deleteItem(item: any) {

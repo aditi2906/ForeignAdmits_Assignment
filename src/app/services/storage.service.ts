@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 
 export class StorageService {
   key: any;
-   
+  private todoList: any;
 
   constructor() { }
 
