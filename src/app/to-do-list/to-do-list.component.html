@@ -7,31 +7,26 @@
         #newItem
         placeholder="Your Task..."
         formControlName="item"
+        required
       >
-      <input matInput type="date" class="form-control" id="TaskDate" name="TaskDate"
+      <input  type="date" class="form-control" id="TaskDate" name="TaskDate"
         formControlName="TaskDate"  min="{{TaskDate | date:'yyyy-MM-dd'}}" #new >
-        <input matInput type="time"  id="TaskTime" name="TaskTime"
-        formControlName="TaskTime"  placeholder="enter-time" onfocus="(this.type='time')" onblur="(this.type='time')" #new2 >
+        <input  type="time"  id="TaskTime" name="TaskTime"
+        formControlName="TaskTime"  placeholder="enter-time"  #new2 >
     </mat-form-field>
-
     <button
     class="add-button"
-    type="submit"
+    mat-raised-button
+    color="primary"
     [disabled]="todoForm.invalid"
-      (click)="addItem(newItem.value,TaskDate,TaskTime)"
-    class="btn-floating waves-effect waves-light red"
+    (click)="addItem(newItem.value,TaskDate,TaskTime)"
   >
-    <i class="material-icons">add</i>
+    Add
   </button>
-  </form>
-  <mat-error
-    *ngIf="
-      todoForm.get('item')?.invalid &&
-      (todoForm.get('item')?.dirty || todoForm.get('item')?.touched)
-    "
-  >
-    Enter a task!
-  </mat-error>
+  </form> 
+  <mat-error *ngIf="todoForm.get('item','TaskDate','TaskTime')?.invalid && (todoForm.get('item','TaskDate', 'TaskTime')?.dirty || todoForm.get('item','TaskDate', 'TaskTime')?.touched)">
+  Please write something.
+</mat-error>
 </div>
 
 <div cdkDropListGroup>
@@ -48,8 +43,7 @@
         class="example-box"
         *ngFor="let item of items | slice:0:10; let i = index"
         cdkDrag
-      >{{ item.description }}<p>{{new.value}}</p>
-      <p>{{new2.value}}</p>
+      >{{ item.description }}<p>{{new.value}}</p>{{new2.value}}
         <button mat-icon-button color="warn" (click)="deleteItem(i)">
           <mat-icon>delete</mat-icon>
         </button>
@@ -80,3 +74,25 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
