@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Item } from '../item';
+import { Task } from '../item';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -8,55 +8,43 @@ import {
 } from '@angular/cdk/drag-drop';
 import { TodoListService } from '../services/todo-list.service';
 
-
-
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss'],
 })
 export class ToDoListComponent implements OnInit {
-  todoList: Item[] | undefined;
-  
+
   todoForm: FormGroup | any;
 
-  items: Item[] = [
-    
-  ];
-  done: Item[] = [];
-  TaskDate:  any;
-  TaskTime:  any;
+  items: Task[] = [];
+  done: Task[] = [];
+  taskDate: any;
 
-  constructor
-  (private fb: FormBuilder,
-    private todoListService: TodoListService) {}
+  constructor(
+    private fb: FormBuilder,
+    private ts: TodoListService
+  ) {}
 
   ngOnInit(): void {
-    this.TaskDate = new Date();
+    this.taskDate = new Date();
     this.todoForm = this.fb.group({
-      item: ['','','',Validators.required],
+      item: ['', '', '', Validators.required],
+      date: ['', '', '', Validators.required],
+      time: ['', '', '', Validators.required]
     });
-    this.todoList = this.todoListService.getTodoList();
-    
-  
+    this.items = this.ts.getTodoList();
   }
 
-  addItem(description: string, TaskDate:any, TaskTime:any) {
-    this.items.unshift({
-      description,
-      TaskDate,
-      TaskTime,
-      done: false,
-    });
-     this.todoListService.addItem({
-  description: '',
-  TaskDate: this.TaskDate,
-  TaskTime: {
-    hours: 0,
-    minutes: 0
-  },
-  done: false
-});
+  addItem(description: string, taskDate: any, taskTime: any) {
+    const newItem: Task = {
+      description: description,
+      date: taskDate,
+      time: taskTime,
+      done: false
+    };
+    this.ts.addItem(newItem);
+    this.items = this.ts.getTodoList();
   }
 
   deleteItem(item: any) {
@@ -67,7 +55,7 @@ export class ToDoListComponent implements OnInit {
     this.done.splice(item, 1);
   }
 
-  drop(event: CdkDragDrop<Item[]>) {
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,

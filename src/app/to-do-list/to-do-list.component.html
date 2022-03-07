@@ -8,35 +8,53 @@
         placeholder="Your Task..."
         formControlName="item"
         required
-      >
-      <input matInput type="date" class="form-control" id="TaskDate" name="TaskDate"
-        formControlName="TaskDate"  min="{{TaskDate | date:'yyyy-MM-dd'}}" #new >
-        <input matInput type="time"  id="TaskTime" name="TaskTime"
-        formControlName="TaskTime"  placeholder="enter-time" onfocus="(this.type='time')" onblur="(this.type='time')" #new2 >
+      />
+      <input
+        matInput
+        type="date"
+        class="form-control"
+        id="date"
+        name="date"
+        formControlName="date"
+        min="{{ taskDate | date: 'yyyy-MM-dd' }}"
+        #date
+      />
+      <input
+        matInput
+        type="time"
+        id="time"
+        name="time"
+        formControlName="time"
+        placeholder="enter-time"
+        onfocus="(this.type='time')"
+        onblur="(this.type='time')"
+        #time
+      />
     </mat-form-field>
     <button
-    class="add-button"
-    type="submit"
-    [disabled]="todoForm.invalid"
-    (click)="addItem(newItem.value,TaskDate,TaskTime)"
-    class="btn-floating waves-effect waves-light red"
+      class="add-button"
+      type="submit"
+      [disabled]="todoForm.invalid"
+      (click)="addItem(newItem.value, date.value, time.value)"
+      class="btn-floating waves-effect waves-light red"
+    >
+      <i class="material-icons">add</i>
+    </button>
+  </form>
+  <mat-error
+    style="color: red"
+    *ngIf="
+      todoForm.get('item')?.invalid &&
+      (todoForm.get('item')?.dirty || todoForm.get('item')?.touched)
+    "
   >
-    <i class="material-icons">add</i>
-  </button>
-  </form> 
-  <mat-error style="color:red"
-  *ngIf="
-    todoForm.get('item')?.invalid &&
-    (todoForm.get('item')?.dirty || todoForm.get('item')?.touched)
-  "
->
-  Enter a task!
-</mat-error>
+    Enter a task!
+  </mat-error>
 </div>
 
 <div cdkDropListGroup>
   <div class="example-container">
-    <h2>To Be Done</h2>
+    <h2>To Be Donee</h2>
 
     <div
       cdkDropList
@@ -46,10 +64,12 @@
     >
       <div
         class="example-box"
-        *ngFor="let item of items | slice:0:10; let i = index"
+        *ngFor="let item of items | slice: 0:10; let i = index"
         cdkDrag
-      >{{ item.description }}<p>{{new.value}}</p>
-      <p>{{new2.value}}</p>
+      >
+        {{ item.description }}
+        <p>{{ item.date }}</p>
+        <p>{{ item.time }}</p>
         <button mat-icon-button color="warn" (click)="deleteItem(i)">
           <mat-icon>delete</mat-icon>
         </button>
@@ -67,7 +87,8 @@
       (cdkDropListDropped)="drop($event)"
     >
       <div class="example-box" *ngFor="let item of done; let d = index" cdkDrag>
-        {{ item.description }} <p>{{new.value}}</p>
+        {{ item.description }}
+        <p>{{ date.value }}</p>
         <div class="icons-box">
           <button mat-icon-button color="warn" (click)="deleteDoneItem(d)">
             <mat-icon>delete</mat-icon>

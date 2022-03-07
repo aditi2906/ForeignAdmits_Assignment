@@ -1,7 +1,7 @@
 import { Time } from "@angular/common";
-export interface Item {
+export interface Task {
   description: string;
-  TaskDate:Date,
-  TaskTime:Time,
+  date: Date;
+  time: Time;
   done: boolean;
 }
